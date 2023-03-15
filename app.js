@@ -28,7 +28,7 @@ const Item = mongoose.model("Item", itemsSchema);
 
 async function insertD() {
 
-    Item.deleteMany();
+    
     const item1 = new Item({
         name: "Eat"
     });
@@ -62,9 +62,13 @@ async function Data(){
 const workItems = [];
 
     async function init() {
-        console.log(defaultItems.length);
-        if (defaultItems.length==0)
+       // console.log(defaultItems.length);
+       const c= await Item.find({},{'name':1,_id:0});
+       //console.log(c);
+        if (c.length=== 0)
             await insertD();
+        else
+            await Data();
     }
 
 init();
@@ -94,6 +98,6 @@ app.get("/about", function(req, res) {
 });
 
 
-app.listen(3000, function(res, req) {
-    console.log('Server on');
-});
+// app.listen(3000, function(res, req) {
+//     console.log('Server on');
+// });
