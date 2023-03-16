@@ -50,32 +50,35 @@ async function insertD() {
     await Data();
 }
 async function Data(){
-	
+	d=[];
 	const res = await Item.find({},{'name':1,_id:0});
     console.log(res);
     res.forEach(n => d.push(n.name));
-    console.log(d);
+    
 	//deleteA();	
 }
 
 
 const workItems = [];
 
-    async function init() {
-       // console.log(defaultItems.length);
-       const c= await Item.find({},{'name':1,_id:0});
-       //console.log(c);
-        if (c.length=== 0)
-            await insertD();
-        else
-            await Data();
+async function init() {
+    // console.log(defaultItems.length);
+    const c = await Item.find({});
+    console.log(c.length);
+    if (c.length === 0 ){
+        await insertD();
     }
-
+    else{
+        await Data();
+    }
+}
 init();
-
-
 app.get("/", function(req, res) {
+    //init();
+    console.log(d);
     res.render("list", { listTitle: "Today", newListItems: d });
+
+
 
 });
 
@@ -86,6 +89,9 @@ app.post("/", function(req, res) {
             name: itemName
         });
     itemN.save();
+    //d.push(itemN.name);
+    init();
+    res.redirect("/");
     
 });
 
@@ -98,6 +104,6 @@ app.get("/about", function(req, res) {
 });
 
 
-// app.listen(3000, function(res, req) {
-//     console.log('Server on');
-// });
+app.listen(3000, function(res, req) {
+    console.log('Server on');
+});
