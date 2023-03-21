@@ -53,7 +53,7 @@ async function Data(){
 	d=[];
 	const res = await Item.find({},{'name':1,_id:0});
     console.log(res);
-    res.forEach(n => d.push(n.name));
+    res.forEach(n => d.push(n));
     
 	//deleteA();	
 }
@@ -74,7 +74,7 @@ async function init() {
 }
 init();
 app.get("/", function(req, res) {
-    //init();
+    init();
     console.log(d);
     res.render("list", { listTitle: "Today", newListItems: d });
 
@@ -104,6 +104,6 @@ app.get("/about", function(req, res) {
 });
 
 
-app.listen(3000, function(res, req) {
+app.listen(3007, function(res, req) {
     console.log('Server on');
 });
