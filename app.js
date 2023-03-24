@@ -12,6 +12,7 @@ var d =[], defaultItems;
 var defaultItems=[];
 app.set('view engine', 'ejs');
 
+//app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -95,6 +96,9 @@ app.post("/", function(req, res) {
     
 });
 
+app.post("/delete",function(res,req){
+    console.log(req.body.cbox);
+})
 app.get("/work", function(req, res) {
     res.render("list", { listTitle: "Work List", newListItems: workItems });
 });
