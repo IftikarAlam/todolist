@@ -12,7 +12,7 @@ var d =[], defaultItems;
 var defaultItems=[];
 app.set('view engine', 'ejs');
 
-//app.use(express.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -75,7 +75,7 @@ async function init() {
 }
 init();
 app.get("/", function(req, res) {
-    init();
+    // init();
     console.log(d);
     res.render("list", { listTitle: "Today", newListItems: d });
 
@@ -97,7 +97,9 @@ app.post("/", function(req, res) {
 });
 
 app.post("/delete",function(res,req){
-    console.log(req.body.cbox);
+        const b = req.body.cbox;
+        console.log(b);
+
 })
 app.get("/work", function(req, res) {
     res.render("list", { listTitle: "Work List", newListItems: workItems });
@@ -109,5 +111,6 @@ app.get("/about", function(req, res) {
 
 
 app.listen(3007, function(res, req) {
+    //init();
     console.log('Server on');
 });
