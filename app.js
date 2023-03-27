@@ -6,10 +6,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-var d = [],
-  defaultItems;
-
-var defaultItems = [];
+let d = [], defaultItems = [];
 app.set("view engine", "ejs");
 
 app.use(express.json());
@@ -23,7 +20,7 @@ const itemsSchema = new mongoose.Schema({
 });
 const Item = mongoose.model("Item", itemsSchema);
 
-async function insertD() {
+async function insertDefaultItems() {
   const items = [{ name: "Eat" }, { name: "Learn" }, { name: "Sleep" }];
 
   defaultItems.push(items);
@@ -44,16 +41,18 @@ async function Data() {
 const workItems = [];
 
 async function init() {
-  // console.log(defaultItems.length);
-  const c = await Item.find({});
-  console.log(c.length);
-  if (c.length === 0) {
-    await insertD();
+  const items = await Item.find({});
+  console.log("Items in the DB = " + items.length);
+  if (items.length === 0) {
+    await insertDefaultItems();
   } else {
     await Data();
   }
 }
+
+// Talking to the moon
 init();
+
 app.get("/", function (req, res) {
   // init();
   console.log(d);
@@ -72,9 +71,9 @@ app.post("/", function (req, res) {
 });
 
 app.post("/delete", function (res, req) {
-  const b = req.body.cbox;
-  console.log(b);
+  console.log("My name is = " + res.body.name);
 });
+
 app.get("/work", function (req, res) {
   res.render("list", { listTitle: "Work List", newListItems: workItems });
 });
@@ -83,7 +82,7 @@ app.get("/about", function (req, res) {
   res.render("about");
 });
 
-app.listen(3007, function (res, req) {
+app.listen(6969, function (res, req) {
   //init();
   console.log("Server on");
 });
